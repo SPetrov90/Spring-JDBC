@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--BasicDataSource(apache), C3p0, BoneCp, HicariCP-->
+    <bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/spring-example" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+    </bean>
+
+    <bean name="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean name="mappingSql" class="ru.sergey.spring.util.MappingSqlQueryExample">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean name="updateSql" class="ru.sergey.spring.util.SqlUpdateExample">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean name="insertSql" class="ru.sergey.spring.util.InsertExample">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean name="deleteSql" class="ru.sergey.spring.util.DeleteExample">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean name="batchSql" class="ru.sergey.spring.util.BatchSqlUpdateExample">
+    <property name="dataSource" ref="dataSource"/>
+</bean>
+
+    <bean name="functionSql" class="ru.sergey.spring.util.SqlFunctionExample">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean name="jdbcTemplateDao" class="ru.sergey.spring.dao.JdbcTemplateContactDao">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <property name="mappingSqlQueryExample" ref="mappingSql"/>
+        <property name="sqlUpdateExample" ref="updateSql"/>
+        <property name="insertExample" ref="insertSql"/>
+        <property name="deleteExample" ref="deleteSql"/>
+        <property name="batchSqlUpdateExample" ref="batchSql"/>
+        <property name="sqlFunctionExample" ref="functionSql"/>
+    </bean>
+</beans>

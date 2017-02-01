@@ -1,0 +1,7 @@
+DELIMITER //
+CREATE FUNCTION getFirstNameById(in_id INT)
+        RETURNS VARCHAR(60)
+BEGIN 
+    RETURN (SELECT FIRST_NAME FROM contact WHERE id= in_id);
+END  //
+DELIMITER ;
